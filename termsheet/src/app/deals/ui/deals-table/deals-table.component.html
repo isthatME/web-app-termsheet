@@ -12,7 +12,7 @@
     <tbody>
       @for (deal of filteredDeals; track deal.id) {
         <tr>
-          <td>{{ deal.dealName }}</td>
+          <td [innerHTML]="deal.dealName"></td>
           <td>{{ deal.purchasePrice | currency }}</td>
           <td>{{ deal.address }}</td>
           <td>{{ deal.noi | currency }}</td>

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   combineLatest,
+  debounceTime,
   map,
   merge,
   Observable,
@@ -47,7 +48,7 @@ export class DealsPageComponent {
     dealName: ['', Validators.required],
     purchasePrice: [0, [Validators.required, Validators.min(1)]],
     address: ['', Validators.required],
-    noi: [0, [Validators.required, Validators.min(0)]],
+    noi: [0, [Validators.required, Validators.min(1)]],
   });
 
   protected readonly nameFilterValue$ = new BehaviorSubject<string>('');
@@ -110,24 +111,42 @@ export class DealsPageComponent {
     map(([items, nameFilter, operator, priceFilterValue]) => {
       const normalizedNameFilter = nameFilter.trim().toLowerCase();
 
-      return items.filter((deal) => {
-        const nameMatches =
-          normalizedNameFilter.length === 0 ||
-          deal.dealName.toLowerCase().includes(normalizedNameFilter);
+      return items
+        .filter((deal) => {
+          const nameMatches =
+            normalizedNameFilter.length === 0 ||
+            deal.dealName.toLowerCase().includes(normalizedNameFilter);
 
-        const priceMatches =
-          priceFilterValue === null ||
-          (operator === 'gt'
-            ? deal.purchasePrice > priceFilterValue
-            : deal.purchasePrice < priceFilterValue);
+          const priceMatches =
+            priceFilterValue === null ||
+            (operator === 'gt'
+              ? deal.purchasePrice > priceFilterValue
+              : deal.purchasePrice < priceFilterValue);
 
-        return nameMatches && priceMatches;
-      });
+          return nameMatches && priceMatches;
+        })
+        .map((deal) => ({
+          ...deal,
+          dealName: this.highlightMatch(deal.dealName, normalizedNameFilter),
+        }));
     }),
   );
+  highlightMatch(text: string, query: string): string {
+    const normalizedQuery = query.trim();
+
+    if (normalizedQuery.length === 0) {
+      return text;
+    }
+
+    const escapedQuery = normalizedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const matcher = new RegExp(`(${escapedQuery})`, 'ig');
+
+    return text.replace(matcher, '<mark>$1</mark>');
+  }
 
   protected readonly capRatePreview$ = this.addDealForm.valueChanges.pipe(
     startWith(this.addDealForm.value),
+    debounceTime(300),
     map((formValue) =>
       this.dealsService.calculateCapRate(
         Number(formValue.noi ?? 0),

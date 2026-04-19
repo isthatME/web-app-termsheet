@@ -69,19 +69,21 @@
     }
   </label>
 
-  <section
-    class="cap-rate-preview"
-    [class.outside-range]="isCapRateTypical === false"
-  >
-    <h3>Cap Rate (Auto)</h3>
-    <p class="cap-rate-value">{{ capRatePreview | percent: "1.2-2" }}</p>
-    <p class="cap-rate-hint">Typical realistic cap rate is 5% to 12%.</p>
-    @if (isCapRateTypical === false) {
-      <p class="cap-rate-warning">
-        This cap rate is outside the typical range.
-      </p>
-    }
-  </section>
+  @if (form.valid) {
+    <section
+      class="cap-rate-preview"
+      [class.outside-range]="isCapRateTypical === false"
+    >
+      <h3>Cap Rate</h3>
+      <p class="cap-rate-value">{{ capRatePreview | percent: "1.2-2" }}</p>
+      <p class="cap-rate-hint">Typical realistic cap rate is 5% to 12%.</p>
+      @if (isCapRateTypical === false) {
+        <p class="cap-rate-warning">
+          This cap rate is outside the typical range.
+        </p>
+      }
+    </section>
+  }
 
   <button type="submit" [disabled]="form.invalid">Add Deal</button>
 </form>
