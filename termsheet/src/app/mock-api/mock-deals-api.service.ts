@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { Deal } from '../deals/models/deal.model';
+import { Deal } from '../pages/deals/models/deal.model';
 
 @Injectable({ providedIn: 'root' })
 export class MockDealsApiService {

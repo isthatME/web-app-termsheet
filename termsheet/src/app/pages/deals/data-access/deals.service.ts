@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Deal } from '../models/deal.model';
-import { MockDealsApiService } from '../../mock-api/mock-deals-api.service';
+import { MockDealsApiService } from '../../../mock-api/mock-deals-api.service';
 
 export enum PriceFilterOperatorEnum {
   GreaterThan = 'gt',

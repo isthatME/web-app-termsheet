@@ -12,7 +12,7 @@ import {
   scan,
   startWith,
 } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Deal } from './models/deal.model';
 import {
   PriceFilterOperatorEnum,
@@ -146,7 +146,7 @@ export class DealsPageComponent {
 
   protected readonly capRatePreview$ = this.addDealForm.valueChanges.pipe(
     startWith(this.addDealForm.value),
-    debounceTime(300),
+    debounceTime(250),
     map((formValue) =>
       this.dealsService.calculateCapRate(
         Number(formValue.noi ?? 0),

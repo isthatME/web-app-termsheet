@@ -9,7 +9,7 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, from, of, Subject, switchMap, takeUntil } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-login-page',
