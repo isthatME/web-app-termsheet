@@ -9,7 +9,7 @@ label {
   font-weight: 600;
 
   & span {
-    color: #dc3545;
+    color: var(--app-danger-color);
   }
 }
 
@@ -34,13 +34,13 @@ button {
 
 input {
   &.empty {
-    border: 1px solid #dc3545;
+    border: 1px solid var(--app-danger-color);
   }
 }
 
 button {
   cursor: pointer;
-  color: #fff;
+  color: var(--app-on-primary-color);
   border: none;
   background: linear-gradient(
     135deg,
@@ -101,5 +101,5 @@ button[disabled] {
 
 .error {
   margin: 0;
-  color: #dc3545;
+  color: var(--app-danger-color);
 }

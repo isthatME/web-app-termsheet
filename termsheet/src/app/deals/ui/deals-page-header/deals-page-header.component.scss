@@ -15,7 +15,7 @@ button {
   font: inherit;
   border-radius: 8px;
   cursor: pointer;
-  color: #fff;
+  color: var(--app-on-primary-color);
   border: none;
   background: linear-gradient(
     135deg,
