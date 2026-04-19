@@ -1,0 +1,87 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="add-deal-form">
+  <label>
+    <div class="label-wrapper">
+      <p>Deal Name</p>
+      <span>{{ isControlInvalid("dealName") ? "*" : "" }}</span>
+    </div>
+    <input
+      type="text"
+      formControlName="dealName"
+      [class]="{
+        empty: isControlInvalid('dealName'),
+      }"
+    />
+    @if (isControlInvalid("dealName")) {
+      <small class="error">Deal name is required.</small>
+    }
+  </label>
+
+  <label>
+    <div class="label-wrapper">
+      <p>Purchase Price ($)</p>
+      <span>{{ isControlInvalid("purchasePrice") ? "*" : "" }}</span>
+    </div>
+    <input
+      type="number"
+      min="1"
+      formControlName="purchasePrice"
+      [class]="{
+        empty: isControlInvalid('purchasePrice'),
+      }"
+    />
+    @if (isControlInvalid("purchasePrice")) {
+      <small class="error">Purchase price is required.</small>
+    }
+  </label>
+
+  <label>
+    <div class="label-wrapper">
+      <p>Address</p>
+      <span>{{ isControlInvalid("address") ? "*" : "" }}</span>
+    </div>
+    <input
+      type="text"
+      formControlName="address"
+      [class]="{
+        empty: isControlInvalid('address'),
+      }"
+    />
+    @if (isControlInvalid("address")) {
+      <small class="error">Address is required.</small>
+    }
+  </label>
+
+  <label>
+    <div class="label-wrapper">
+      <p>NOI (Net Operating Income) ($)</p>
+      <span>{{ isControlInvalid("noi") ? "*" : "" }}</span>
+    </div>
+    <input
+      type="number"
+      min="0"
+      formControlName="noi"
+      [class]="{
+        empty: isControlInvalid('noi'),
+      }"
+    />
+    @if (isControlInvalid("noi")) {
+      <small class="error">NOI is required.</small>
+    }
+  </label>
+
+  <section
+    class="cap-rate-preview"
+    [class.outside-range]="isCapRateTypical === false"
+  >
+    <h3>Cap Rate (Auto)</h3>
+    <p class="cap-rate-value">{{ capRatePreview | percent: "1.2-2" }}</p>
+    <p class="cap-rate-hint">Typical realistic cap rate is 5% to 12%.</p>
+    @if (isCapRateTypical === false) {
+      <p class="cap-rate-warning">
+        This cap rate is outside the typical range.
+      </p>
+    }
+  </section>
+
+  <button type="submit" [disabled]="form.invalid">Add Deal</button>
+</form>

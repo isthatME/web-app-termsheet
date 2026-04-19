@@ -1,0 +1,25 @@
+.filters {
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+input,
+select {
+  height: 44px;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  border: 1px solid rgba(var(--wp-admin-theme-color--rgb), 0.35);
+  border-radius: 8px;
+}
+
+.price-filter-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0.6rem;
+}

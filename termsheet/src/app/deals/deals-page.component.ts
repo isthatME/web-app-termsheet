@@ -1,6 +1,6 @@
-import { AsyncPipe, CurrencyPipe, PercentPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -17,13 +17,23 @@ import {
   PriceFilterOperatorEnum,
   DealsService,
 } from './data-access/deals.service';
+import { DealsAddFormComponent } from './ui/deals-add-form/deals-add-form.component';
+import { DealsFiltersComponent } from './ui/deals-filters/deals-filters.component';
+import { DealsPageHeaderComponent } from './ui/deals-page-header/deals-page-header.component';
+import { DealsTableComponent } from './ui/deals-table/deals-table.component';
 
 @Component({
   selector: 'app-deals-page',
   templateUrl: './deals-page.component.html',
   styleUrl: './deals-page.component.scss',
   standalone: true,
-  imports: [ReactiveFormsModule, CurrencyPipe, AsyncPipe, PercentPipe],
+  imports: [
+    AsyncPipe,
+    DealsPageHeaderComponent,
+    DealsAddFormComponent,
+    DealsFiltersComponent,
+    DealsTableComponent,
+  ],
   providers: [DealsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,11 +55,15 @@ export class DealsPageComponent {
     new BehaviorSubject<PriceFilterOperatorEnum>(
       PriceFilterOperatorEnum.GreaterThan,
     );
-  private readonly priceFilterValue$ = new BehaviorSubject<number | null>(null);
+  protected readonly priceFilterValue$ = new BehaviorSubject<number | null>(
+    null,
+  );
   private readonly addDealInput$ = new BehaviorSubject<Omit<
     Deal,
     'id' | 'capRate'
   > | null>(null);
+  protected priceOperatorValue: PriceFilterOperatorEnum =
+    PriceFilterOperatorEnum.GreaterThan;
 
   private readonly calculatedDeals$ = this.dealsService.getDeals().pipe(
     map(
@@ -82,12 +96,12 @@ export class DealsPageComponent {
     }),
   );
 
-  readonly deals$: Observable<Deal[]> = merge(
+  protected readonly deals$: Observable<Deal[]> = merge(
     this.calculatedDeals$,
     this.addedDealsInput$,
   ).pipe(scan((items, reducer) => reducer(items), [] as Deal[]));
 
-  readonly filteredDeals$: Observable<Deal[]> = combineLatest([
+  protected readonly filteredDeals$: Observable<Deal[]> = combineLatest([
     this.deals$,
     this.nameFilterValue$,
     this.priceOperatorValue$,
@@ -112,7 +126,7 @@ export class DealsPageComponent {
     }),
   );
 
-  readonly capRatePreview$ = this.addDealForm.valueChanges.pipe(
+  protected readonly capRatePreview$ = this.addDealForm.valueChanges.pipe(
     startWith(this.addDealForm.value),
     map((formValue) =>
       this.dealsService.calculateCapRate(
@@ -122,11 +136,11 @@ export class DealsPageComponent {
     ),
   );
 
-  readonly isCapRateTypical$ = this.capRatePreview$.pipe(
+  protected readonly isCapRateTypical$ = this.capRatePreview$.pipe(
     map((capRate) => capRate >= 0.05 && capRate <= 0.12),
   );
 
-  onPriceValueChange(rawValue: string): void {
+  onPriceFilterChange(rawValue: string): void {
     const parsed = Number(rawValue);
 
     if (rawValue.trim() === '' || Number.isNaN(parsed)) {
@@ -136,27 +150,21 @@ export class DealsPageComponent {
 
     this.priceFilterValue$.next(parsed);
   }
-  isControlInvalid(
-    controlName: keyof typeof this.addDealForm.controls,
-  ): boolean {
-    const control = this.addDealForm.controls[controlName];
-    return control.invalid && control.dirty;
-  }
+
   addDeal(): void {
-    if (this.addDealForm.invalid) {
-      return void 0;
+    if (this.addDealForm.valid) {
+      const { dealName, purchasePrice, address, noi } =
+        this.addDealForm.getRawValue();
+
+      this.addDealInput$.next({
+        dealName,
+        purchasePrice,
+        address,
+        noi,
+      });
+
+      this.addDealForm.reset();
     }
-    const { dealName, purchasePrice, address, noi } =
-      this.addDealForm.getRawValue();
-
-    this.addDealInput$.next({
-      dealName,
-      purchasePrice,
-      address,
-      noi,
-    });
-
-    this.addDealForm.reset();
   }
 
   logout(): void {

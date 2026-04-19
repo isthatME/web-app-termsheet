@@ -1,0 +1,30 @@
+@if (deals; as filteredDeals) {
+  <table>
+    <thead>
+      <tr>
+        <th>Deal Name</th>
+        <th>Purchase Price</th>
+        <th>Address</th>
+        <th>NOI</th>
+        <th>Cap Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (deal of filteredDeals; track deal.id) {
+        <tr>
+          <td>{{ deal.dealName }}</td>
+          <td>{{ deal.purchasePrice | currency }}</td>
+          <td>{{ deal.address }}</td>
+          <td>{{ deal.noi | currency }}</td>
+          <td>{{ deal.capRate | percent: "1.2-2" }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No deals match your filters.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>Loading deals...</p>
+}

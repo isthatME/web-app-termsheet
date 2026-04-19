@@ -1,0 +1,105 @@
+.add-deal-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+
+  & span {
+    color: #dc3545;
+  }
+}
+
+.label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+input,
+button {
+  height: 44px;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  border: 1px solid rgba(var(--wp-admin-theme-color--rgb), 0.35);
+  border-radius: 8px;
+}
+
+input {
+  &.empty {
+    border: 1px solid #dc3545;
+  }
+}
+
+button {
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  background: linear-gradient(
+    135deg,
+    var(--wp-admin-theme-color),
+    var(--wp-block-synced-color)
+  );
+  font-weight: 600;
+}
+
+button:hover {
+  background: linear-gradient(
+    135deg,
+    var(--wp-admin-theme-color-darker-10),
+    var(--wp-block-synced-color)
+  );
+}
+
+button[disabled] {
+  cursor: not-allowed;
+}
+
+.cap-rate-preview {
+  background: rgba(var(--wp-admin-theme-color--rgb), 0.08);
+  border: 1px solid rgba(var(--wp-admin-theme-color--rgb), 0.35);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cap-rate-preview h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--wp-admin-theme-color-darker-20);
+}
+
+.cap-rate-value {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--wp-bound-block-color);
+}
+
+.cap-rate-hint,
+.cap-rate-warning {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.cap-rate-warning {
+  color: var(--wp-admin-theme-color-darker-20);
+}
+
+.cap-rate-preview.outside-range {
+  border-color: var(--wp-bound-block-color);
+  background: rgba(var(--wp-block-synced-color--rgb), 0.1);
+}
+
+.error {
+  margin: 0;
+  color: #dc3545;
+}
