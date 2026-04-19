@@ -1,0 +1,48 @@
+<section class="login-page">
+  <h1>Login</h1>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <label>
+      <div class="label-wrapper">
+        <p>Username</p>
+        <span>{{ isUsernameInvalid ? "*" : "" }}</span>
+      </div>
+      <input
+        type="text"
+        formControlName="username"
+        [class]="{
+          empty: isUsernameInvalid,
+        }"
+      />
+      @if (
+        loginForm.controls.username.invalid && loginForm.controls.username.dirty
+      ) {
+        <small class="error">Username is required.</small>
+      }
+    </label>
+
+    <label>
+      <div class="label-wrapper">
+        <p>Password</p>
+        <span>{{ isPasswordInvalid ? "*" : "" }}</span>
+      </div>
+      <input
+        type="password"
+        formControlName="password"
+        [class]="{
+          empty: isPasswordInvalid,
+        }"
+      />
+      @if (isPasswordInvalid) {
+        <small class="error">Password is required.</small>
+      }
+    </label>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+    <button type="submit" [disabled]="loginForm.invalid || submitting()">
+      {{ submitting() ? "Signing in..." : "Sign in" }}
+    </button>
+  </form>
+</section>
