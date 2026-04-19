@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="add-deal-form">
-  <label>
+  <label class="full-width">
     <div class="label-wrapper">
       <p>Deal Name</p>
       <span>{{ isControlInvalid("dealName") ? "*" : "" }}</span>
@@ -16,25 +16,7 @@
     }
   </label>
 
-  <label>
-    <div class="label-wrapper">
-      <p>Purchase Price ($)</p>
-      <span>{{ isControlInvalid("purchasePrice") ? "*" : "" }}</span>
-    </div>
-    <input
-      type="number"
-      min="1"
-      formControlName="purchasePrice"
-      [class]="{
-        empty: isControlInvalid('purchasePrice'),
-      }"
-    />
-    @if (isControlInvalid("purchasePrice")) {
-      <small class="error">Purchase price is required.</small>
-    }
-  </label>
-
-  <label>
+  <label class="full-width">
     <div class="label-wrapper">
       <p>Address</p>
       <span>{{ isControlInvalid("address") ? "*" : "" }}</span>
@@ -51,27 +33,47 @@
     }
   </label>
 
-  <label>
-    <div class="label-wrapper">
-      <p>NOI (Net Operating Income) ($)</p>
-      <span>{{ isControlInvalid("noi") ? "*" : "" }}</span>
-    </div>
-    <input
-      type="number"
-      min="0"
-      formControlName="noi"
-      [class]="{
-        empty: isControlInvalid('noi'),
-      }"
-    />
-    @if (isControlInvalid("noi")) {
-      <small class="error">NOI is required.</small>
-    }
-  </label>
+  <div class="form-row two-columns">
+    <label>
+      <div class="label-wrapper">
+        <p>Purchase Price ($)</p>
+        <span>{{ isControlInvalid("purchasePrice") ? "*" : "" }}</span>
+      </div>
+      <input
+        type="number"
+        min="1"
+        formControlName="purchasePrice"
+        [class]="{
+          empty: isControlInvalid('purchasePrice'),
+        }"
+      />
+      @if (isControlInvalid("purchasePrice")) {
+        <small class="error">Purchase price is required.</small>
+      }
+    </label>
+
+    <label>
+      <div class="label-wrapper">
+        <p>NOI (Net Operating Income) ($)</p>
+        <span>{{ isControlInvalid("noi") ? "*" : "" }}</span>
+      </div>
+      <input
+        type="number"
+        min="0"
+        formControlName="noi"
+        [class]="{
+          empty: isControlInvalid('noi'),
+        }"
+      />
+      @if (isControlInvalid("noi")) {
+        <small class="error">NOI is required.</small>
+      }
+    </label>
+  </div>
 
   @if (form.valid) {
     <section
-      class="cap-rate-preview"
+      class="cap-rate-preview full-width"
       [class.outside-range]="isCapRateTypical === false"
     >
       <h3>Cap Rate</h3>
@@ -85,5 +87,7 @@
     </section>
   }
 
-  <button type="submit" [disabled]="form.invalid">Add Deal</button>
+  <button class="full-width" type="submit" [disabled]="form.invalid">
+    Add Deal
+  </button>
 </form>

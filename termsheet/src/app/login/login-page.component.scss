@@ -40,13 +40,12 @@ input {
 }
 
 button {
-  padding: 0.6rem 0.9rem;
+  padding: 1rem;
   cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
+  color: white;
+  border-radius: 5px;
+  background-color: var(--wp-admin-theme-color);
+  border: none;
 }
 
 .error {

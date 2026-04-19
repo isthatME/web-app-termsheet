@@ -3,7 +3,7 @@
   --wp-block-synced-color--rgb: 122, 0, 223;
   --wp-bound-block-color: var(--wp-block-synced-color);
   --wp-editor-canvas-background: #ddd;
-  --wp-admin-theme-color: #007cba;
+  --wp-admin-theme-color: #207cec;
   --wp-admin-theme-color--rgb: 0, 124, 186;
   --wp-admin-theme-color-darker-10: #006ba1;
   --wp-admin-theme-color-darker-10--rgb: 0, 107, 160.5;
@@ -20,7 +20,7 @@
 
 body {
   margin: 0;
-  background: var(--wp-editor-canvas-background);
+  background: white;
   color: var(--app-text-color);
   font-family:
     Inter,

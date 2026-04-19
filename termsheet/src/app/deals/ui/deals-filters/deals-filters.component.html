@@ -1,12 +1,12 @@
 <div class="filters">
-  <label>
+  <label class="full-width">
     Deal Name
     <input type="text" [value]="nameFilter" (input)="onNameInput($event)" />
   </label>
 
-  <label>
+  <label class="full-width">
     Purchase Price
-    <div class="price-filter-row">
+    <div class="price-filter-row two-columns">
       <select [value]="priceOperator" (change)="onOperatorChange($event)">
         <option value="gt">Greater than</option>
         <option value="lt">Less than</option>

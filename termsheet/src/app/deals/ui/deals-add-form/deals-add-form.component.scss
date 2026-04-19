@@ -3,6 +3,16 @@
   gap: 0.8rem;
 }
 
+.form-row.two-columns {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
 label {
   display: grid;
   gap: 0.4rem;
@@ -56,10 +66,6 @@ button:hover {
     var(--wp-admin-theme-color-darker-10),
     var(--wp-block-synced-color)
   );
-}
-
-button[disabled] {
-  cursor: not-allowed;
 }
 
 .cap-rate-preview {

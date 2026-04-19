@@ -3,6 +3,10 @@
   gap: 0.8rem;
 }
 
+.full-width {
+  grid-column: 1 / -1;
+}
+
 label {
   display: grid;
   gap: 0.4rem;
@@ -20,6 +24,12 @@ select {
 
 .price-filter-row {
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: minmax(160px, 200px) 1fr;
   gap: 0.6rem;
+}
+
+@media (max-width: 760px) {
+  .price-filter-row {
+    grid-template-columns: 1fr;
+  }
 }
